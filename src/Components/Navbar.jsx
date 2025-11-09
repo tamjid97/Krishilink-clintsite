@@ -7,11 +7,10 @@ const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // Sign Out handler
   const handleLogout = async () => {
     try {
-      await logout();   // Firebase logout
-      navigate("/");    // logout হলে homepage এ redirect
+      await logout();
+      navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -66,76 +65,79 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-green-300 shadow-sm px-4">
-      {/* Navbar Start */}
-      <div className="navbar-start">
-        {/* Mobile Dropdown */}
-        <div className="dropdown">
-          <div tabIndex={0} className="btn btn-ghost lg:hidden cursor-pointer">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+    <nav className="sticky top-0 bg-green-300 shadow-sm z-50 px-4">
+      <div className="navbar max-w-7xl mx-auto">
+        {/* Navbar Start */}
+        <div className="navbar-start">
+          {/* Mobile Dropdown */}
+          <div className="dropdown">
+            <div tabIndex={0} className="btn btn-ghost lg:hidden cursor-pointer">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow z-50"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
+              {user ? userLinksMobile : guestLinksMobile}
+            </ul>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow z-50"
-          >
-            {user ? userLinksMobile : guestLinksMobile}
+
+          <Link to="/" className="btn btn-ghost text-xl font-bold">
+            KrishiLink
+          </Link>
+        </div>
+
+        {/* Navbar Center (Desktop Links) */}
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal px-1">
+            {user ? userLinksDesktop : guestLinksDesktop}
           </ul>
         </div>
-        <Link to="/" className="btn btn-ghost text-xl font-bold cursor-pointer">
-          KrishiLink
-        </Link>
+
+        {/* Navbar End (Buttons) */}
+        <div className="navbar-end space-x-2">
+          {!user && (
+            <Link
+              to="/register"
+              className="btn bg-green-500 text-white hover:bg-green-700 transition-all duration-200"
+            >
+              Register
+            </Link>
+          )}
+
+          {user && (
+            <button
+              onClick={handleLogout}
+              className="btn bg-red-500 text-white hover:bg-red-600 transition-all duration-200"
+            >
+              Sign Out
+            </button>
+          )}
+
+          {!user && (
+            <Link
+              to="/login"
+              className="btn bg-green-600 text-white hover:bg-green-700 transition-all duration-200"
+            >
+              Login
+            </Link>
+          )}
+        </div>
       </div>
-
-      {/* Navbar Center (Desktop links) */}
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          {user ? userLinksDesktop : guestLinksDesktop}
-        </ul>
-      </div>
-
-      {/* Navbar End (Desktop buttons) */}
-      <div className="navbar-end space-x-2">
-        {!user && (
-          <Link
-            to="/register"
-            className="btn bg-green-500 text-white hover:bg-green-700 cursor-pointer transition-all duration-200"
-          >
-            Register
-          </Link>
-        )}
-
-        {user && (
-          <button
-            onClick={handleLogout}
-            className="btn bg-red-500 text-white hover:bg-red-600 cursor-pointer transition-all duration-200"
-          >
-            Sign Out
-          </button>
-        )}
-
-        {!user && (
-          <Link
-            to="/login"
-            className="btn bg-green-600 text-white hover:bg-green-700 cursor-pointer transition-all duration-200"
-          >
-            Login
-          </Link>
-        )}
-      </div>
-    </div>
+    </nav>
   );
 };
 
