@@ -2,6 +2,7 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Contexts/AuthContext";
+import logo from "../assets/icons8-tree-planting-60.png";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -19,48 +20,77 @@ const Navbar = () => {
   // Desktop links
   const guestLinksDesktop = (
     <>
-      <li><Link to="/">Home</Link></li>
-      <li><Link to="/all-crops">All Crops</Link></li>
+      <li>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <Link to="/all-crops">All Crops</Link>
+      </li>
     </>
   );
 
   const userLinksDesktop = (
     <>
-      <li><Link to="/">Home</Link></li>
-      <li><Link to="/all-crops">All Crops</Link></li>
-      <li><Link to="/profile">Profile</Link></li>
-      <li><Link to="/add-crops">Add Crops</Link></li>
-      <li><Link to="/my-posts">My Posts</Link></li>
-      <li><Link to="/my-interests">My Interests</Link></li>
+      <li>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <Link to="/all-crops">All Crops</Link>
+      </li>
+      <li>
+        <Link to="/profile">Profile</Link>
+      </li>
+      <li>
+        <Link to="/add-crops">Add Crops</Link>
+      </li>
+      <li>
+        <Link to="/my-posts">My Posts</Link>
+      </li>
+      <li>
+        <Link to="/my-interests">My Interests</Link>
+      </li>
     </>
   );
 
   // Mobile dropdown links
   const guestLinksMobile = (
     <>
-      <li><Link to="/">Home</Link></li>
-      <li><Link to="/all-crops">All Crops</Link></li>
-      <li><Link to="/login">Login</Link></li>
-      <li><Link to="/register">Register</Link></li>
+      <li>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <Link to="/all-crops">All Crops</Link>
+      </li>
+      <li>
+        <Link to="/login">Login</Link>
+      </li>
+      <li>
+        <Link to="/register">Register</Link>
+      </li>
     </>
   );
 
   const userLinksMobile = (
     <>
-      <li><Link to="/">Home</Link></li>
-      <li><Link to="/all-crops">All Crops</Link></li>
-      <li><Link to="/profile">Profile</Link></li>
-      <li><Link to="/add-crops">Add Crops</Link></li>
-      <li><Link to="/my-posts">My Posts</Link></li>
-      <li><Link to="/my-interests">My Interests</Link></li>
       <li>
-        <button
-          onClick={handleLogout}
-          className="btn btn-ghost w-full text-left text-white bg-red-500 hover:bg-red-600 cursor-pointer transition-all duration-200"
-        >
-          Sign Out
-        </button>
+        <Link to="/">Home</Link>
       </li>
+      <li>
+        <Link to="/all-crops">All Crops</Link>
+      </li>
+      <li>
+        <Link to="/profile">Profile</Link>
+      </li>
+      <li>
+        <Link to="/add-crops">Add Crops</Link>
+      </li>
+      <li>
+        <Link to="/my-posts">My Posts</Link>
+      </li>
+      <li>
+        <Link to="/my-interests">My Interests</Link>
+      </li>
+      <li></li>
     </>
   );
 
@@ -71,7 +101,10 @@ const Navbar = () => {
         <div className="navbar-start">
           {/* Mobile Dropdown */}
           <div className="dropdown">
-            <div tabIndex={0} className="btn btn-ghost lg:hidden cursor-pointer">
+            <div
+              tabIndex={0}
+              className="btn btn-ghost lg:hidden cursor-pointer"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -95,9 +128,10 @@ const Navbar = () => {
             </ul>
           </div>
 
-          <Link to="/" className="btn btn-ghost text-xl font-bold">
-            KrishiLink
+          <Link to="/" className=" text-2xl font-bold text-black">
+            𝗞𝗿𝗶𝘀𝗵𝗶𝗟𝗶𝗻𝗸
           </Link>
+          <img src={logo} alt="" className="w-10 h--10 -mt-2.5" />
         </div>
 
         {/* Navbar Center (Desktop Links) */}
@@ -112,7 +146,7 @@ const Navbar = () => {
           {!user && (
             <Link
               to="/register"
-              className="btn bg-green-500 text-white hover:bg-green-700 transition-all duration-200"
+              className="btn border-none  bg-green-500 text-white hover:bg-green-700 transition-all duration-200"
             >
               Register
             </Link>
@@ -121,7 +155,7 @@ const Navbar = () => {
           {user && (
             <button
               onClick={handleLogout}
-              className="btn bg-red-500 text-white hover:bg-red-600 transition-all duration-200"
+              className="btn border-none  bg-red-500 text-white hover:bg-red-600 transition-all duration-200"
             >
               Sign Out
             </button>
@@ -130,7 +164,7 @@ const Navbar = () => {
           {!user && (
             <Link
               to="/login"
-              className="btn bg-green-600 text-white hover:bg-green-700 transition-all duration-200"
+              className="btn border-none   bg-green-600 text-white hover:bg-green-700 transition-all duration-200"
             >
               Login
             </Link>
