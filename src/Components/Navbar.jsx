@@ -1,5 +1,5 @@
 // Navbar.jsx
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Contexts/AuthContext";
 import logo from "../assets/icons8-tree-planting-60.png";
@@ -7,167 +7,109 @@ import logo from "../assets/icons8-tree-planting-60.png";
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const handleLogout = async () => {
     try {
       await logout();
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
 
-  // Desktop links
-  const guestLinksDesktop = (
-    <>
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-        <Link to="/all-crops">All Crops</Link>
-      </li>
-    </>
-  );
-
-  const userLinksDesktop = (
-    <>
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-        <Link to="/all-crops">All Crops</Link>
-      </li>
-      <li>
-        <Link to="/profile">Profile</Link>
-      </li>
-      <li>
-        <Link to="/add-crops">Add Crops</Link>
-      </li>
-      <li>
-        <Link to="/my-posts">My Posts</Link>
-      </li>
-      <li>
-        <Link to="/my-interests">My Interests</Link>
-      </li>
-    </>
-  );
-
-  // Mobile dropdown links
-  const guestLinksMobile = (
-    <>
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-        <Link to="/all-crops">All Crops</Link>
-      </li>
-      <li>
-        <Link to="/login">Login</Link>
-      </li>
-      <li>
-        <Link to="/register">Register</Link>
-      </li>
-    </>
-  );
-
-  const userLinksMobile = (
-    <>
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-        <Link to="/all-crops">All Crops</Link>
-      </li>
-      <li>
-        <Link to="/profile">Profile</Link>
-      </li>
-      <li>
-        <Link to="/add-crops">Add Crops</Link>
-      </li>
-      <li>
-        <Link to="/my-posts">My Posts</Link>
-      </li>
-      <li>
-        <Link to="/my-interests">My Interests</Link>
-      </li>
-      <li></li>
-    </>
-  );
-
   return (
     <nav className="sticky top-0 bg-green-300 shadow-sm z-50 px-4">
-      <div className="navbar max-w-7xl mx-auto">
-        {/* Navbar Start */}
-        <div className="navbar-start">
-          {/* Mobile Dropdown */}
-          <div className="dropdown">
-            <div
-              tabIndex={0}
-              className="btn btn-ghost lg:hidden cursor-pointer"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow z-50"
-            >
-              {user ? userLinksMobile : guestLinksMobile}
-            </ul>
-          </div>
-
-          <Link to="/" className=" text-2xl font-bold text-black">
+      <div className="navbar max-w-7xl mx-auto flex justify-between items-center">
+        {/* Logo */}
+        <div className="flex items-center gap-2">
+          <img src={logo} alt="logo" className="w-10 h-10" />
+          <Link to="/" className="text-2xl font-bold text-black">
             𝗞𝗿𝗶𝘀𝗵𝗶𝗟𝗶𝗻𝗸
           </Link>
-          <img src={logo} alt="" className="w-10 h--10 -mt-2.5" />
         </div>
 
-        {/* Navbar Center (Desktop Links) */}
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            {user ? userLinksDesktop : guestLinksDesktop}
-          </ul>
-        </div>
-
-        {/* Navbar End (Buttons) */}
-        <div className="navbar-end space-x-2">
-          {!user && (
-            <Link
-              to="/register"
-              className="btn border-none  bg-green-500 text-white hover:bg-green-700 transition-all duration-200"
-            >
-              Register
-            </Link>
-          )}
-
+        {/* Links */}
+        <ul className="hidden lg:flex gap-6">
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/all-crops">All Crops</Link>
+          </li>
           {user && (
-            <button
-              onClick={handleLogout}
-              className="btn border-none  bg-red-500 text-white hover:bg-red-600 transition-all duration-200"
-            >
-              Sign Out
-            </button>
+            <>
+              <li>
+                <Link to="profile">My profile</Link>
+              </li>
+              <li>
+                <Link to="/add-crops">Add Crops</Link>
+              </li>
+              <li>
+                <Link to="/my-posts">My Posts</Link>
+              </li>
+              <li>
+                <Link to="/my-interests">My Interests</Link>
+              </li>
+            </>
           )}
+        </ul>
 
-          {!user && (
-            <Link
-              to="/login"
-              className="btn border-none   bg-green-600 text-white hover:bg-green-700 transition-all duration-200"
+        {/* User Section */}
+        <div className="relative">
+          {user ? (
+            <div
+              className="relative flex items-center cursor-pointer"
+              onMouseEnter={() => setShowDropdown(true)}
+              onMouseLeave={() => setShowDropdown(false)}
             >
-              Login
-            </Link>
+              {/* Profile Picture */}
+              <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
+                {user.photoURL ? (
+                  <img
+                    src={user.photoURL}
+                    alt="Profile"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span className="text-gray-700 font-bold">
+                    {user.displayName
+                      ? user.displayName.charAt(0).toUpperCase()
+                      : user.email.charAt(0).toUpperCase()}
+                  </span>
+                )}
+              </div>
+
+              {/* Dropdown */}
+              {showDropdown && (
+                <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg p-3 text-center z-50">
+                  <p className="font-semibold text-gray-700 mb-2">
+                    {user.displayName || user.email}
+                  </p>
+                  <button
+                    onClick={handleLogout}
+                    className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600 transition-all"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="flex gap-2">
+              <Link
+                to="/login"
+                className="btn border-none bg-green-600 text-white hover:bg-green-700 transition-all duration-200"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="btn border-none bg-green-500 text-white hover:bg-green-700 transition-all duration-200"
+              >
+                Register
+              </Link>
+            </div>
           )}
         </div>
       </div>

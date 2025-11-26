@@ -5,6 +5,7 @@ import Error404 from "../pages/Error404";
 import Register from "../Components/Register/Register";
 import Login from "../Components/Register/Login";
 import HomeMain from "../Components/Home/HomeMain";
+import MyProile from "../pages/MyProile";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomeMain/>
-      },
+      },    
       {
         path: "register",
         element: <Register />,
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "profile",
+        element: <MyProile/>,
       },
     ],
   },
