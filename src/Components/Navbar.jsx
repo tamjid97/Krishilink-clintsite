@@ -49,7 +49,7 @@ const Navbar = () => {
 
           <li>
             <NavLink
-              to="/all-crops"
+              to="AllCrops"
               className={({ isActive }) => (isActive ? active : normal)}
             >
               All Crops
@@ -180,7 +180,7 @@ const Navbar = () => {
 
           <li>
             <NavLink
-              to="/all-crops"
+              to="AllCrops"
               onClick={closeMobile}
               className={({ isActive }) => (isActive ? active : normal)}
             >

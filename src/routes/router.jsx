@@ -6,6 +6,7 @@ import Register from "../Components/Register/Register";
 import Login from "../Components/Register/Login";
 import HomeMain from "../Components/Home/HomeMain";
 import MyProile from "../pages/MyProile";
+import AllCrops from "../Components/AllCrops";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <MyProile/>,
+      },
+      {
+        path: "AllCrops",
+        element: <AllCrops/>,
       },
     ],
   },
