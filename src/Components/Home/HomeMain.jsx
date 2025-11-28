@@ -1,6 +1,10 @@
 import React from 'react';
 import HeroSlider from "../../pages/HeroSlider";
 import LatestCrop from './LatestCrops/LatestCrop';
+import HowToWork from '../HowToWork';
+import AgroNews from './AgroNews';
+import Donate from './Donet';
+import AgroDoctor from './AgroDocter';
 
 
 
@@ -19,13 +23,21 @@ const HomeMain = () => {
         <LatestCrop/>
       </div>
       {/*How it works section:  */}
-      <div></div>
+      <div>
+        <HowToWork/>
+      </div>
       {/* Agro News or blogs section */}
-      <div></div>
+      <div>
+        <AgroNews/>
+      </div>
       {/* extra-1 */}
-      <div></div>
+      <div>
+        <Donate/>
+      </div>
       {/* extra-2 */}
-      <div></div>
+      <div>
+        <AgroDoctor/>
+      </div>
 
       {/* ---------------------------- */}
     </div>
