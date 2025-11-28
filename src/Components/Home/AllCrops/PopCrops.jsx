@@ -1,9 +1,9 @@
 import React from "react";
 import locationicon from "../../../assets/icons8-location-64.png";
-import { Link } from "react-router";
+import { Link } from "react-router-dom"; 
 
-const Cropsess = ({ crops }) => {
-  const { image, name, quantity, unit, pricePerUnit, location } = crops;
+const PopCrops = ({ crop }) => {
+  const { id, image, name, quantity, unit, pricePerUnit, location } = crop;
 
   return (
     <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 p-4 w-96">
@@ -18,7 +18,7 @@ const Cropsess = ({ crops }) => {
 
       {/* Content */}
       <div className="mt-4 space-y-3 px-2">
-        {/* Name */}
+        {/* Name and Quantity */}
         <div className="flex items-center justify-between">
           <p className="text-xl font-semibold text-gray-800">{name}</p>
           <p className="text-sm text-gray-500">
@@ -26,7 +26,7 @@ const Cropsess = ({ crops }) => {
           </p>
         </div>
 
-        {/* Price + Location */}
+        {/* Price and Location */}
         <div className="flex items-center justify-between">
           <p className="text-lg font-semibold text-green-600">
             ${pricePerUnit}
@@ -38,29 +38,26 @@ const Cropsess = ({ crops }) => {
           </div>
         </div>
 
-        {/* Button */}
-
+        {/* View Details Button */}
         <div
           className="
-        mt-4 w-full py-2 rounded-xl text-white font-semibold
-          bg-gradient-to-r from-green-400 via-emerald-500 to-green-600
-          shadow-md hover:shadow-lg hover:opacity-95
-          transition-all duration-300"
+               mt-4 w-full py-2 rounded-xl text-white font-semibold
+                 bg-gradient-to-r from-green-400 via-emerald-500 to-green-600
+                 shadow-md hover:shadow-lg hover:opacity-95
+                 transition-all duration-300"
         >
-
-            <Link
+          <Link
             to="ViewDetails"
-          className="flex justify-center
-          
-        "
-        >
-          View Details
-        </Link>
+            className="flex justify-center
+                
+             "
+          >
+            View Details
+          </Link>
         </div>
-      
       </div>
     </div>
   );
 };
 
-export default Cropsess;
+export default PopCrops;

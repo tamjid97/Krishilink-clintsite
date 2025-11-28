@@ -1,12 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
 import HomeLayout from "../layouts/HomeLayout";
-
 import Error404 from "../pages/Error404";
 import Register from "../Components/Register/Register";
 import Login from "../Components/Register/Login";
 import HomeMain from "../Components/Home/HomeMain";
-import MyProile from "../pages/MyProile";
-import AllCrops from "../Components/AllCrops";
+import MyProfile from "../pages/MyProfile";
+import ViewDetails from "../Components/Home/DetailsPage/ViewDetails";
+import PrivateRoute from "./PrivateRoute";
+import AllCrops from "../Components/Home/AllCrops/AllCrops";
+import PopCrops from "../Components/Home/AllCrops/PopCrops";
 
 const router = createBrowserRouter([
   {
@@ -15,8 +17,8 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomeMain/>
-      },    
+        element: <HomeMain />,
+      },
       {
         path: "register",
         element: <Register />,
@@ -27,11 +29,23 @@ const router = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <MyProile/>,
+        element: <MyProfile />,
       },
       {
         path: "AllCrops",
-        element: <AllCrops/>,
+        element: <AllCrops />,
+      },
+      {
+        path: "PopCrops",
+        element: <PopCrops/>,
+      },
+      {
+        path: "ViewDetails",
+        element: (
+          <PrivateRoute>
+            <ViewDetails />
+          </PrivateRoute>
+        ),
       },
     ],
   },
