@@ -43,11 +43,14 @@ const ViewDetala = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/interest", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(interestData),
-      });
+      const res = await fetch(
+        "https://smart-deals-api-server-sepia-xi.vercel.app/interest",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(interestData),
+        }
+      );
 
       const data = await res.json();
 
@@ -69,11 +72,14 @@ const ViewDetala = () => {
   // ---------- Update Status ----------
   const handleStatusUpdate = async (interestId, status) => {
     try {
-      const res = await fetch("http://localhost:5000/interest/update", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ interestId, cropId: crop._id, status }),
-      });
+      const res = await fetch(
+        "https://smart-deals-api-server-sepia-xi.vercel.app/interest/update",
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ interestId, cropId: crop._id, status }),
+        }
+      );
 
       const data = await res.json();
 
@@ -111,7 +117,8 @@ const ViewDetala = () => {
         <h1 className="text-3xl font-bold text-gray-800 mb-3">{name}</h1>
         <div className="flex items-center gap-4 mb-4">
           <span className="text-2xl font-semibold text-green-600">
-            {pricePerUnit} <span className="text-gray-600 text-lg">/ {unit}</span>
+            {pricePerUnit}{" "}
+            <span className="text-gray-600 text-lg">/ {unit}</span>
           </span>
         </div>
         <div className="flex items-center text-gray-700 mb-5">
@@ -119,7 +126,9 @@ const ViewDetala = () => {
           <span className="text-lg">{location}</span>
         </div>
         <div className="mt-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Description</h2>
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">
+            Description
+          </h2>
           <p className="text-gray-600 leading-relaxed text-lg">{description}</p>
         </div>
 
@@ -141,7 +150,10 @@ const ViewDetala = () => {
         )}
 
         {/* Interest Modal */}
-        <dialog ref={viewModalRef} className="modal modal-bottom sm:modal-middle">
+        <dialog
+          ref={viewModalRef}
+          className="modal modal-bottom sm:modal-middle"
+        >
           <div className="modal-box">
             <form
               onSubmit={handleInterestSubmit}
@@ -182,7 +194,9 @@ const ViewDetala = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1">Message</label>
+                <label className="block text-sm font-medium mb-1">
+                  Message
+                </label>
                 <textarea
                   rows="3"
                   value={message}
@@ -239,13 +253,17 @@ const ViewDetala = () => {
                           {i.status === "pending" && (
                             <>
                               <button
-                                onClick={() => handleStatusUpdate(i._id, "accepted")}
+                                onClick={() =>
+                                  handleStatusUpdate(i._id, "accepted")
+                                }
                                 className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
                               >
                                 Accept
                               </button>
                               <button
-                                onClick={() => handleStatusUpdate(i._id, "rejected")}
+                                onClick={() =>
+                                  handleStatusUpdate(i._id, "rejected")
+                                }
                                 className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
                               >
                                 Reject

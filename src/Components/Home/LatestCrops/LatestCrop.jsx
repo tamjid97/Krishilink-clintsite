@@ -10,7 +10,9 @@ const LatestCrop = () => {
   useEffect(() => {
     const fetchLatestCrops = async () => {
       try {
-        const res = await fetch("http://localhost:5000/latest-crops");
+        const res = await fetch(
+          "https://smart-deals-api-server-sepia-xi.vercel.app/latest-crops"
+        );
         if (!res.ok) throw new Error("Network response was not ok");
         const data = await res.json();
         setLatestCrops(data);
@@ -42,18 +44,17 @@ const LatestCrop = () => {
       </div>
 
       <div className="flex justify-center mt-5">
-    <Link
-  to="/all-crops"
-  className="flex justify-center items-center
+        <Link
+          to="/all-crops"
+          className="flex justify-center items-center
           mt-4 w-35 py-3 rounded-xl text-white font-semibold
           bg-gradient-to-r from-emerald-400 via-green-500 to-emerald-600
           shadow-md hover:shadow-xl 
           hover:brightness-110 hover:-translate-y-1
           transition-all duration-300 ease-out"
->
-  All Crops
-</Link>
-
+        >
+          All Crops
+        </Link>
       </div>
     </div>
   );

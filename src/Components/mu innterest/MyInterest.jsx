@@ -13,7 +13,7 @@ const MyInterest = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/interests?userEmail=${user.email}`
+        `https://smart-deals-api-server-sepia-xi.vercel.app/interests?userEmail=${user.email}`
       );
       const data = await res.json();
       setInterests(data);
@@ -31,11 +31,14 @@ const MyInterest = () => {
 
   const handleAction = async (interestId, cropId, status) => {
     try {
-      const res = await fetch("http://localhost:5000/interest/update", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ interestId, cropId, status }),
-      });
+      const res = await fetch(
+        "https://smart-deals-api-server-sepia-xi.vercel.app/interest/update",
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ interestId, cropId, status }),
+        }
+      );
 
       const data = await res.json();
 
@@ -61,7 +64,8 @@ const MyInterest = () => {
     return 0;
   });
 
-  if (loading) return <div className="text-center mt-20 text-lg">Loading...</div>;
+  if (loading)
+    return <div className="text-center mt-20 text-lg">Loading...</div>;
   if (!interests || interests.length === 0)
     return (
       <div className="text-center mt-20 text-gray-500 text-lg">

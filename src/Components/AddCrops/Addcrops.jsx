@@ -46,16 +46,18 @@ const Addcrops = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/crops", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(postData),
-      });
+      const response = await fetch(
+        "https://smart-deals-api-server-sepia-xi.vercel.app/crops",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(postData),
+        }
+      );
 
       if (response.ok) {
         toast.success("Crop added successfully!");
         navigate("/Mypost");
-
       } else {
         const data = await response.json();
         toast.error(data.message || "Failed to add crop");
@@ -70,7 +72,9 @@ const Addcrops = () => {
 
   return (
     <div className="max-w-3xl mx-auto mt-10 p-8 bg-white shadow-lg rounded-xl border border-gray-200">
-      <h2 className="text-3xl font-bold text-green-700 mb-6 text-center">Add New Crop</h2>
+      <h2 className="text-3xl font-bold text-green-700 mb-6 text-center">
+        Add New Crop
+      </h2>
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Name & Type */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -173,7 +177,9 @@ const Addcrops = () => {
           type="submit"
           disabled={loading}
           className={`w-full py-3 text-white rounded-lg font-semibold transition ${
-            loading ? "bg-green-300 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
+            loading
+              ? "bg-green-300 cursor-not-allowed"
+              : "bg-green-600 hover:bg-green-700"
           }`}
         >
           {loading ? "Adding..." : "Add Crop"}

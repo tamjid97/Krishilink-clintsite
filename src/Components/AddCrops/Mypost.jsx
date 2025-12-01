@@ -16,10 +16,12 @@ const Mypost = () => {
     if (!user?.email) return;
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/crops`);
+      const res = await fetch(
+        `https://smart-deals-api-server-sepia-xi.vercel.app/crops`
+      );
       const data = await res.json();
       // filter only logged-in user's crops
-      const userCrops = data.filter(c => c.owner?.ownerEmail === user.email);
+      const userCrops = data.filter((c) => c.owner?.ownerEmail === user.email);
       setCrops(userCrops);
     } catch (err) {
       console.error(err);
@@ -57,11 +59,14 @@ const Mypost = () => {
   // Save edited crop
   const handleSaveEdit = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/crops/${editCrop._id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(editData),
-      });
+      const res = await fetch(
+        `https://smart-deals-api-server-sepia-xi.vercel.app/crops/${editCrop._id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(editData),
+        }
+      );
       if (res.ok) {
         toast.success("Crop updated successfully!");
         setEditCrop(null);
@@ -77,16 +82,21 @@ const Mypost = () => {
 
   // Delete crop
   const handleDelete = async (cropId) => {
-    const confirm = window.confirm("Are you sure you want to delete this crop?");
+    const confirm = window.confirm(
+      "Are you sure you want to delete this crop?"
+    );
     if (!confirm) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/crops/${cropId}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `https://smart-deals-api-server-sepia-xi.vercel.app/crops/${cropId}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (res.ok) {
         toast.success("Crop deleted successfully!");
-        setCrops(crops.filter(c => c._id !== cropId));
+        setCrops(crops.filter((c) => c._id !== cropId));
       } else {
         toast.error("Failed to delete crop");
       }
@@ -122,7 +132,11 @@ const Mypost = () => {
               {crops.map((crop) => (
                 <tr key={crop._id} className="text-center">
                   <td className="p-2 border">
-                    <img src={crop.image} alt={crop.name} className="w-16 h-16 object-cover mx-auto rounded"/>
+                    <img
+                      src={crop.image}
+                      alt={crop.name}
+                      className="w-16 h-16 object-cover mx-auto rounded"
+                    />
                   </td>
                   <td className="p-2 border">{crop.name}</td>
                   <td className="p-2 border">{crop.type}</td>
