@@ -180,7 +180,7 @@ const Navbar = () => {
 
           <li>
             <NavLink
-              to="AllCrops"
+              to="all-crops"
               onClick={closeMobile}
               className={({ isActive }) => (isActive ? active : normal)}
             >
@@ -202,7 +202,7 @@ const Navbar = () => {
 
               <li>
                 <NavLink
-                  to="/add-crops"
+                  to="AddCrops"
                   onClick={closeMobile}
                   className={({ isActive }) => (isActive ? active : normal)}
                 >
@@ -212,7 +212,7 @@ const Navbar = () => {
 
               <li>
                 <NavLink
-                  to="/my-posts"
+                  to="Mypost"
                   onClick={closeMobile}
                   className={({ isActive }) => (isActive ? active : normal)}
                 >
@@ -222,7 +222,7 @@ const Navbar = () => {
 
               <li>
                 <NavLink
-                  to="/my-interests"
+                  to="MyInterest"
                   onClick={closeMobile}
                   className={({ isActive }) => (isActive ? active : normal)}
                 >

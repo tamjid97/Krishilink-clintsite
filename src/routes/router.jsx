@@ -28,25 +28,25 @@ const router = createBrowserRouter([
       { path: "profile", element: <MyProfile /> },
       { path: "all-crops", element: <AllCrops /> },
       { path: "pop-crops", element: <PopCrops /> },
-      { path: "MyInterest",element: <MyInterest/> },
-      { path: "AddCrops",element: <Addcrops/> },
-      { path: "Mypost",element: <Mypost/>  },
+      { path: "MyInterest", element: <MyInterest /> },
+      { path: "AddCrops", element: <Addcrops /> },
+      { path: "Mypost", element: <Mypost /> },
 
       {
         path: "crops/:id",
-        loader: ({params}) => fetch(`http://localhost:5000/crops/${params
-          .id}`),
+        loader: ({ params }) =>
+          fetch(
+            `https://smart-deals-api-server-sepia-xi.vercel.app/crops/${params.id}`
+          ),
         element: (
           <PrivateRoute>
-            <ViewDetala loggedInUser={loggedInUser}/>
+            <ViewDetala loggedInUser={loggedInUser} />
           </PrivateRoute>
         ),
-      }
+      },
     ],
   },
   { path: "*", element: <Error404 /> },
 ]);
 
 export default router;
-
-

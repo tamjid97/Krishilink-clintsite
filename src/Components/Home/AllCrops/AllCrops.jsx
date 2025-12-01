@@ -12,7 +12,9 @@ const AllCrops = () => {
   useEffect(() => {
     const fetchAllCrops = async () => {
       try {
-        const res = await fetch("http://localhost:5000/crops");
+        const res = await fetch(
+          "https://smart-deals-api-server-sepia-xi.vercel.app/crops"
+        );
         if (!res.ok) throw new Error("কৃষি তথ্য আনতে সমস্যা হয়েছে");
         const data = await res.json();
         setAllCrops(data);
@@ -28,7 +30,7 @@ const AllCrops = () => {
   }, []);
 
   useEffect(() => {
-    const filtered = allCrops.filter(crop =>
+    const filtered = allCrops.filter((crop) =>
       crop.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredCrops(filtered);
@@ -52,7 +54,9 @@ const AllCrops = () => {
 
       {/* Cards */}
       {filteredCrops.length === 0 ? (
-        <p className="text-center text-gray-500 mt-10 text-xl">No results found.</p>
+        <p className="text-center text-gray-500 mt-10 text-xl">
+          No results found.
+        </p>
       ) : (
         <div>
           <Cardcrops latestCrops={filteredCrops} />
