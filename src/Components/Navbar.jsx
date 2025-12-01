@@ -49,7 +49,7 @@ const Navbar = () => {
 
           <li>
             <NavLink
-              to="AllCrops"
+              to="all-crops"
               className={({ isActive }) => (isActive ? active : normal)}
             >
               All Crops
@@ -69,7 +69,7 @@ const Navbar = () => {
 
               <li>
                 <NavLink
-                  to="/add-crops"
+                  to="AddCrops"
                   className={({ isActive }) => (isActive ? active : normal)}
                 >
                   Add Crops
@@ -78,7 +78,7 @@ const Navbar = () => {
 
               <li>
                 <NavLink
-                  to="/my-posts"
+                  to="Mypost"
                   className={({ isActive }) => (isActive ? active : normal)}
                 >
                   My Posts
@@ -87,7 +87,7 @@ const Navbar = () => {
 
               <li>
                 <NavLink
-                  to="/my-interests"
+                  to="MyInterest"
                   className={({ isActive }) => (isActive ? active : normal)}
                 >
                   My Interests

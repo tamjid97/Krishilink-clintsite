@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Cardcrops from "../LatestCrops/Cardcrops";
+import Searsh from "./Searsh";
 
 const AllCrops = () => {
   const [allCrops, setAllCrops] = useState([]);
@@ -37,7 +38,9 @@ const AllCrops = () => {
           All Crops
         </h2>
       </div>
-
+<div>
+  <Searsh/>
+</div>
       <div>
         <Cardcrops latestCrops={allCrops} />
       </div>

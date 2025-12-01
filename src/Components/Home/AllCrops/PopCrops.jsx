@@ -1,9 +1,9 @@
 import React from "react";
 import locationicon from "../../../assets/icons8-location-64.png";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 
 const PopCrops = ({ crop }) => {
-  const { id, image, name, quantity, unit, pricePerUnit, location } = crop;
+  const { _id, image, name, quantity, unit, pricePerUnit, location } = crop;
 
   return (
     <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 p-4 w-96">
@@ -41,16 +41,16 @@ const PopCrops = ({ crop }) => {
         {/* View Details Button */}
         <div
           className="
-               mt-4 w-full py-2 rounded-xl text-white font-semibold
-                 bg-gradient-to-r from-green-400 via-emerald-500 to-green-600
-                 shadow-md hover:shadow-lg hover:opacity-95
-                 transition-all duration-300"
+          mt-4 w-full py-2 rounded-xl text-white font-semibold
+          bg-gradient-to-r from-green-400 via-emerald-500 to-green-600
+        shadow-md hover:shadow-lg hover:opacity-95
+              transition-all duration-300"
         >
           <Link
-            to="ViewDetails"
+            to={`/crops/${_id}`}
             className="flex justify-center
                 
-             "
+            "
           >
             View Details
           </Link>
