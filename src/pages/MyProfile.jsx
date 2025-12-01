@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { auth, storage } from "../firebase/firebase.int";
+import { auth } from "../firebase/firebase.int";
+import { updateProfile } from "firebase/auth"; // firebase/auth থেকে সরাসরি import
 import { useNavigate } from "react-router-dom";
-import { updateProfile } from "firebase/auth";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import toast from "react-hot-toast";
 
 const MyProfile = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [displayName, setDisplayName] = useState("");
-  const [photoFile, setPhotoFile] = useState(null);
+  const [photoURL, setPhotoURL] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -19,17 +19,17 @@ const MyProfile = () => {
       } else {
         setUser(currentUser);
         setDisplayName(currentUser.displayName || "");
+        setPhotoURL(currentUser.photoURL || "");
       }
     });
+
     return () => unsubscribe();
   }, [navigate]);
 
   if (!user) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-100 to-slate-200">
-        <p className="text-lg text-slate-600 animate-pulse">
-          Loading user data...
-        </p>
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <p className="text-gray-500 animate-pulse">Loading profile...</p>
       </div>
     );
   }
@@ -38,48 +38,38 @@ const MyProfile = () => {
     e.preventDefault();
     setLoading(true);
 
-    let photoURL = user.photoURL;
-
     try {
-      // Upload new photo if selected
-      if (photoFile) {
-        const storageRef = ref(storage, `profile/${user.uid}/${photoFile.name}`);
-        await uploadBytes(storageRef, photoFile);
-        photoURL = await getDownloadURL(storageRef);
-      }
-
-      // Update displayName and photoURL
-      await updateProfile(user, {
+      await updateProfile(auth.currentUser, {
         displayName,
         photoURL,
       });
 
       setUser({ ...user, displayName, photoURL });
       setEditMode(false);
-      alert("Profile updated successfully!");
+      toast.success("Profile updated successfully!");
     } catch (err) {
       console.error(err);
-      alert("Failed to update profile.");
+      toast.error("Failed to update profile.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-100 to-slate-200">
-      <div className="backdrop-blur-xl bg-white/40 border border-white/30 shadow-2xl rounded-3xl p-10 w-full max-w-sm text-center">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 p-4">
+      <div className="w-full max-w-md bg-white/80 backdrop-blur-md border border-white/30 rounded-3xl shadow-2xl p-8 text-center">
         {/* Profile Picture */}
-        <div className="w-28 h-28 rounded-full bg-white/60 shadow-inner overflow-hidden flex items-center justify-center mx-auto mb-5">
-          {user.photoURL ? (
+        <div className="w-32 h-32 mx-auto rounded-full overflow-hidden bg-gray-200 flex items-center justify-center mb-6">
+          {photoURL ? (
             <img
-              src={user.photoURL}
+              src={photoURL}
               alt="Profile"
               className="w-full h-full object-cover"
             />
           ) : (
-            <span className="text-3xl font-bold text-slate-600">
-              {user.displayName
-                ? user.displayName.charAt(0).toUpperCase()
+            <span className="text-4xl font-bold text-gray-500">
+              {displayName
+                ? displayName.charAt(0).toUpperCase()
                 : user.email.charAt(0).toUpperCase()}
             </span>
           )}
@@ -87,57 +77,63 @@ const MyProfile = () => {
 
         {!editMode ? (
           <>
-            {/* Name */}
-            <h2 className="text-2xl font-semibold text-slate-700 mb-1">
-              {user.displayName || "Unnamed User"}
+            <h2 className="text-2xl font-semibold text-gray-700 mb-1">
+              {displayName || "Unnamed User"}
             </h2>
-            {/* Email */}
-            <p className="text-slate-600 mb-6">{user.email}</p>
+            <p className="text-gray-500 mb-6">{user.email}</p>
 
-            {/* Buttons */}
             <div className="space-y-3">
               <button
                 onClick={() => setEditMode(true)}
-                className="w-full bg-emerald-500 text-white py-3 rounded-full text-lg font-medium shadow-lg hover:shadow-xl hover:scale-[1.03] active:scale-[0.98] transition-all duration-200"
+                className="w-full py-3 bg-green-500 text-white rounded-full font-medium shadow hover:bg-green-600 transition"
               >
                 Edit Profile
               </button>
               <button
-                onClick={() => {
-                  auth.signOut().then(() => navigate("/login"));
-                }}
-                className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-3 rounded-full text-lg font-medium shadow-lg hover:shadow-xl hover:scale-[1.03] active:scale-[0.98] transition-all duration-200"
+                onClick={() =>
+                  auth.signOut().then(() => navigate("/login"))
+                }
+                className="w-full py-3 bg-red-500 text-white rounded-full font-medium shadow hover:bg-red-600 transition"
               >
                 Logout
               </button>
             </div>
           </>
         ) : (
-          // Edit Form
           <form onSubmit={handleUpdateProfile} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-600 mb-1">
+              <label className="block text-left text-gray-600 mb-1">
                 Display Name
               </label>
               <input
                 type="text"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
-                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-600 mb-1">
-                Profile Photo
+              <label className="block text-left text-gray-600 mb-1">
+                Profile Image URL
               </label>
               <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => setPhotoFile(e.target.files[0])}
-                className="w-full border rounded-lg px-3 py-2"
+                type="text"
+                value={photoURL}
+                onChange={(e) => setPhotoURL(e.target.value)}
+                placeholder="https://example.com/photo.jpg"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
               />
             </div>
-            <div className="flex justify-between">
+            {photoURL && (
+              <div className="flex justify-center mt-2">
+                <img
+                  src={photoURL}
+                  alt="Preview"
+                  className="w-32 h-32 rounded-full object-cover shadow-md"
+                />
+              </div>
+            )}
+            <div className="flex justify-between mt-4">
               <button
                 type="button"
                 onClick={() => setEditMode(false)}
@@ -148,9 +144,9 @@ const MyProfile = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition"
+                className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
               >
-                {loading ? "Updating..." : "Save Changes"}
+                {loading ? "Saving..." : "Save Changes"}
               </button>
             </div>
           </form>

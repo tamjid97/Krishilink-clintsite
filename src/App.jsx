@@ -1,4 +1,5 @@
 
+import { Toaster } from "react-hot-toast";
 import "./App.css";
 
 function App() {
@@ -6,7 +7,9 @@ function App() {
 
   return (
     <>
-      <div><p>epick</p></div>
+      <div>
+        <Toaster position="top-center" reverseOrder={false} />
+      </div>
     </>
   );
 }
